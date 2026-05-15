@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BG Finance — Dashboard Financeiro Pessoal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #07090f;
+  --navy2: #0c0f1c;
+  --card: #10141f;
+  --card2: #161b2e;
+  --gold: #f5c842;
+  --gold2: #d4a820;
+  --green: #00d98b;
+  --green2: #00b572;
+  --red: #ff3d5a;
+  --blue: #4a9eff;
+  --text: #e8eaf2;
+  --muted: #6b728a;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(245,200,66,0.2);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy);
+  color:var(--text);
+  overflow-x:hidden;
+  font-size:16px;
+  line-height:1.65;
+}
+
+/* TICKER */
+.ticker-wrap{
+  background:var(--red);
+  padding:9px 0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.ticker-inner{
+  display:inline-block;
+  animation:tick 24s linear infinite;
+}
+.ticker-inner span{
+  font-family:'Syne',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  margin:0 28px;
+}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:18px 24px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,9,15,0.96);
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(14px);
+}
+.logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:16px;
+  color:var(--text);
+  letter-spacing:0.02em;
+}
+.logo .bg{color:var(--gold);}
+.logo .fin{color:var(--text);}
+.nav-pill{
+  font-family:'Syne',sans-serif;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.14em;
+  border:1px solid var(--border);
+  padding:4px 12px;
+  border-radius:100px;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+.nav-cta{
+  margin-left:auto;
+  background:var(--gold);
+  color:#000;
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:0.1em;
+  padding:10px 18px;
+  border-radius:8px;
+  text-decoration:none;
+  transition:opacity .2s;
+  white-space:nowrap;
+}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px 24px 64px;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, rgba(245,200,66,0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 10% 90%, rgba(0,217,139,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 70%, rgba(74,158,255,0.07) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+}
+.live-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border2);
+  background:rgba(245,200,66,0.07);
+  padding:7px 16px;
+  border-radius:100px;
+  font-family:'Syne',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:28px;
+}
+.live-dot{
+  width:7px;height:7px;
+  background:var(--green);
+  border-radius:50%;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(0.8)}}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(36px,9vw,64px);
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:-0.02em;
+  margin-bottom:22px;
+  max-width:700px;
+}
+.hero h1 .g{color:var(--gold);}
+.hero h1 .gr{color:var(--green);}
+.hero-sub{
+  font-size:17px;
+  color:rgba(232,234,242,0.7);
+  max-width:520px;
+  margin:0 auto 40px;
+  font-weight:300;
+}
+.hero-sub strong{color:var(--text);font-weight:500;}
+.hero-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:var(--gold);
+  color:#000;
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:15px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:18px 36px;
+  border-radius:12px;
+  text-decoration:none;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 8px 32px rgba(245,200,66,0.25);
+}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(245,200,66,0.35);}
+.hero-cta svg{width:18px;height:18px;}
+.hero-discount{
+  margin-top:16px;
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:0.04em;
+}
+.hero-discount span{color:var(--green);font-weight:500;}
+
+/* MOCKUP DASHBOARD */
+.mockup-wrap{
+  position:relative;
+  margin:60px auto 0;
+  max-width:360px;
+  width:100%;
+}
+.mockup-frame{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 40px 80px rgba(0,0,0,0.6),
+    0 0 60px rgba(245,200,66,0.06);
+}
+.mockup-header{
+  background:#0c0f1a;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.mockup-logo{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;}
+.mockup-logo .g{color:var(--gold);}
+.mockup-badge{
+  font-family:'Syne',sans-serif;
+  font-size:9px;
+  background:rgba(245,200,66,0.15);
+  color:var(--gold);
+  border:1px solid rgba(245,200,66,0.3);
+  padding:3px 9px;border-radius:100px;
+  font-weight:700;letter-spacing:0.08em;
+}
+.mockup-saldo{
+  font-family:'Syne',sans-serif;
+  font-size:11px;color:var(--red);font-weight:700;
+}
+.mockup-tabs{
+  display:flex;gap:4px;padding:10px 12px;
+  background:#0a0d18;
+  border-bottom:1px solid var(--border);
+}
+.mockup-tab{
+  font-size:10px;padding:4px 10px;border-radius:6px;
+  color:var(--muted);cursor:pointer;
+  font-family:'Syne',sans-serif;font-weight:600;
+}
+.mockup-tab.active{background:rgba(245,200,66,0.12);color:var(--gold);}
+.mockup-body{padding:14px 12px;}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.kpi{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.kpi-label{font-size:9px;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+.kpi-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--gold);}
+.kpi-val.red{color:var(--red);}
+.kpi-val.green{color:var(--green);}
+.chart-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;}
+.chart-title{font-size:9px;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.bar-chart{display:flex;align-items:flex-end;gap:4px;height:52px;}
+.bar{
+  flex:1;border-radius:3px 3px 0 0;
+  background:linear-gradient(180deg,var(--blue),rgba(74,158,255,0.4));
+  min-height:8px;
+}
+.bar.alt{background:linear-gradient(180deg,var(--gold),rgba(245,200,66,0.4));}
+.cat-list{display:flex;flex-direction:column;gap:6px;}
+.cat-row{display:flex;align-items:center;justify-content:space-between;font-size:10px;}
+.cat-name{color:var(--text);font-weight:500;}
+.cat-pct{color:var(--muted);}
+.cat-bar-wrap{flex:1;margin:0 8px;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;}
+.cat-bar{height:100%;border-radius:2px;}
+.glow-ring{
+  position:absolute;
+  inset:-2px;
+  border-radius:22px;
+  background:transparent;
+  border:1px solid rgba(245,200,66,0.15);
+  pointer-events:none;
+}
+
+/* SECTION STYLES */
+section{padding:72px 24px;}
+.section-tag{
+  font-family:'Syne',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:20px;
+  justify-content:center;
+}
+.section-tag::before,.section-tag::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);
+  max-width:40px;
+}
+h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(28px,7vw,48px);
+  font-weight:800;
+  line-height:1.15;
+  letter-spacing:-0.02em;
+  text-align:center;
+  margin-bottom:14px;
+}
+h2 .g{color:var(--gold);}
+h2 .gr{color:var(--green);}
+.section-sub{
+  text-align:center;
+  color:rgba(232,234,242,0.6);
+  font-size:15px;
+  max-width:460px;
+  margin:0 auto 48px;
+  font-weight:300;
+}
+
+/* FEATURES CARDS */
+.features-grid{display:flex;flex-direction:column;gap:16px;max-width:560px;margin:0 auto;}
+.feature-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  transition:border-color .2s,transform .2s;
+}
+.feature-card:hover{border-color:rgba(245,200,66,0.2);transform:translateX(4px);}
+.feat-icon{
+  width:44px;height:44px;flex-shrink:0;
+  background:rgba(245,200,66,0.08);
+  border:1px solid rgba(245,200,66,0.15);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+}
+.feat-title{
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:15px;
+  margin-bottom:5px;color:var(--text);
+}
+.feat-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+
+/* DIVIDER */
+.divider{
+  display:flex;align-items:center;gap:0;
+  overflow:hidden;padding:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,rgba(245,200,66,0.4),rgba(0,217,139,0.4),transparent);
+  margin:0 24px;
+  border-radius:2px;
+}
+
+/* COMPARISON */
+.compare-wrap{max-width:560px;margin:0 auto;}
+.compare-tabs{
+  display:flex;gap:8px;margin-bottom:24px;
+}
+.ctab{
+  flex:1;padding:12px;text-align:center;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:0.1em;text-transform:uppercase;border-radius:10px;
+  border:1px solid var(--border);color:var(--muted);cursor:pointer;
+  transition:all .2s;
+}
+.ctab.bad{border-color:rgba(255,61,90,0.3);color:var(--red);}
+.ctab.good{border-color:rgba(0,217,139,0.4);background:rgba(0,217,139,0.08);color:var(--green);}
+.compare-rows{display:flex;flex-direction:column;gap:16px;}
+.compare-row{}
+.compare-label{
+  font-size:11px;color:var(--muted);
+  font-family:'Syne',sans-serif;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;
+}
+.compare-label span{
+  font-size:10px;
+  background:var(--card2);
+  border:1px solid var(--border);
+  padding:2px 8px;border-radius:4px;
+  color:var(--muted);
+}
+.compare-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ccol{
+  padding:14px;border-radius:10px;
+  font-size:13px;line-height:1.4;
+  border:1px solid;
+}
+.ccol.bad{
+  background:rgba(255,61,90,0.05);
+  border-color:rgba(255,61,90,0.15);
+  color:rgba(255,61,90,0.7);
+}
+.ccol.good{
+  background:rgba(0,217,139,0.06);
+  border-color:rgba(0,217,139,0.2);
+  color:var(--text);
+}
+.ccol-icon{font-size:16px;margin-bottom:6px;}
+.result-box{
+  background:rgba(0,217,139,0.07);
+  border:1px solid rgba(0,217,139,0.2);
+  border-radius:14px;
+  padding:22px;
+  margin-top:24px;
+}
+.result-tag{
+  font-family:'Syne',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.12em;color:var(--green);text-transform:uppercase;
+  display:inline-block;
+  background:rgba(0,217,139,0.1);
+  border:1px solid rgba(0,217,139,0.25);
+  padding:4px 12px;border-radius:100px;
+  margin-bottom:12px;
+}
+.result-text{font-size:16px;font-weight:500;line-height:1.5;}
+.result-text strong{color:var(--green);}
+
+/* PRICING */
+.pricing-box{
+  max-width:440px;margin:0 auto;
+  background:var(--card);
+  border:1px solid rgba(245,200,66,0.2);
+  border-radius:20px;
+  padding:32px 28px;
+  box-shadow:0 0 60px rgba(245,200,66,0.06);
+  position:relative;
+  overflow:hidden;
+}
+.pricing-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.price-top-tag{
+  font-family:'Syne',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);text-align:center;margin-bottom:20px;
+}
+.price-items{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.price-item{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:14px;
+}
+.price-check{
+  width:20px;height:20px;flex-shrink:0;
+  background:rgba(0,217,139,0.1);
+  border:1px solid rgba(0,217,139,0.3);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.price-check svg{width:10px;height:10px;color:var(--green);}
+.price-item-text{line-height:1.4;}
+.price-item-text s{color:var(--muted);font-size:12px;margin-left:4px;}
+.divider-dots{
+  display:flex;justify-content:center;gap:3px;margin:20px 0;
+}
+.divider-dots span{
+  width:4px;height:4px;background:rgba(245,200,66,0.4);border-radius:50%;
+}
+.discount-tag{
+  text-align:center;
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--red);margin-bottom:8px;
+}
+.price-main{
+  text-align:center;margin-bottom:24px;
+}
+.price-por{font-size:13px;color:var(--muted);margin-bottom:4px;}
+.price-val{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(52px,14vw,72px);
+  font-weight:800;color:var(--text);
+  line-height:1;
+  letter-spacing:-0.03em;
+}
+.price-val .cur{font-size:28px;vertical-align:super;color:var(--gold);}
+.price-val .cents{font-size:28px;}
+.price-note{font-size:12px;color:var(--muted);margin-top:4px;}
+.buy-btn{
+  display:block;
+  width:100%;
+  background:var(--gold);
+  color:#000;
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:14px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:18px;border-radius:12px;
+  text-decoration:none;
+  text-align:center;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 8px 28px rgba(245,200,66,0.25);
+  margin-bottom:14px;
+}
+.buy-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(245,200,66,0.35);}
+.trust-badges{
+  display:flex;justify-content:center;gap:16px;
+  font-size:11px;color:var(--muted);
+  font-family:'Syne',sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  flex-wrap:wrap;
+}
+.trust-badges span{display:flex;align-items:center;gap:4px;}
+
+/* COUNTDOWN */
+.countdown-wrap{
+  text-align:center;margin-top:40px;
+}
+.countdown-label{
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:14px;
+}
+.countdown{display:flex;justify-content:center;gap:10px;}
+.cd-block{
+  background:var(--red);
+  border-radius:10px;
+  min-width:72px;
+  padding:16px 12px 10px;
+  text-align:center;
+}
+.cd-num{
+  font-family:'Syne',sans-serif;
+  font-size:32px;font-weight:800;color:#fff;
+  line-height:1;display:block;
+}
+.cd-label{
+  font-family:'Syne',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7);
+  display:block;margin-top:4px;
+}
+
+/* FOR WHO */
+.forwho-list{
+  max-width:520px;margin:0 auto;
+  display:flex;flex-direction:column;gap:14px;
+}
+.forwho-item{
+  display:flex;align-items:flex-start;gap:14px;
+  font-size:15px;
+  padding:16px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+.forwho-item:hover{border-color:rgba(0,217,139,0.15);}
+.forwho-check{
+  font-size:18px;color:var(--green);margin-top:1px;flex-shrink:0;
+}
+.forwho-text strong{color:var(--text);}
+.forwho-text{color:rgba(232,234,242,0.75);font-size:14px;line-height:1.5;}
+
+/* FINAL CTA */
+.final-cta{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:48px 28px;
+  text-align:center;
+  max-width:520px;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+}
+.final-cta::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green),var(--gold),var(--blue));
+}
+.final-cta h2{margin-bottom:16px;}
+.final-cta p{color:var(--muted);font-size:15px;margin-bottom:32px;max-width:340px;margin-left:auto;margin-right:auto;}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:32px 24px;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--muted);
+  font-family:'Syne',sans-serif;font-weight:600;letter-spacing:0.06em;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero>*{animation:fadeUp .7s ease both;}
+.hero>.live-badge{animation-delay:.1s;}
+.hero>h1{animation-delay:.2s;}
+.hero>.hero-sub{animation-delay:.3s;}
+.hero>.hero-cta{animation-delay:.4s;}
+.hero>.hero-discount{animation-delay:.45s;}
+.hero>.mockup-wrap{animation-delay:.5s;}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>🔥 LANÇAMENTO COM DESCONTO ESPECIAL</span>
+    <span>💰 CONTROLE FINANCEIRO REAL COM IA</span>
+    <span>📊 DASHBOARD COMPLETO POR R$47</span>
+    <span>✅ ACESSO VITALÍCIO · SEM MENSALIDADE</span>
+    <span>🔥 LANÇAMENTO COM DESCONTO ESPECIAL</span>
+    <span>💰 CONTROLE FINANCEIRO REAL COM IA</span>
+    <span>📊 DASHBOARD COMPLETO POR R$47</span>
+    <span>✅ ACESSO VITALÍCIO · SEM MENSALIDADE</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><span class="bg">BG</span> <span class="fin">FINANCE</span></div>
+  <div class="nav-pill">// DASHBOARD</div>
+  <a href="#comprar" class="nav-cta">QUERO POR R$47 →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="live-badge">
+    <span class="live-dot"></span>
+    Disponível agora · Acesso imediato
+  </div>
+
+  <h1>Seu dinheiro, finalmente,<br><span class="g">sob controle</span> de verdade</h1>
+
+  <p class="hero-sub">
+    O dashboard financeiro com <strong>IA CFO embutida</strong> que organiza suas despesas, encontro de contas a dois, categorias e gráficos — tudo em um lugar só.
+  </p>
+
+  <a href="#comprar" class="hero-cta">
+    ACESSAR O DASHBOARD
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+  <p class="hero-discount">Por apenas <span>R$47,00</span> · pagamento único · acesso vitalício</p>
+
+  <!-- MOCKUP -->
+  <div class="mockup-wrap">
+    <div class="mockup-frame">
+      <div class="mockup-header">
+        <div class="mockup-logo"><span class="g">BG</span> FINANCE</div>
+        <div class="mockup-badge">Maio de 2026</div>
+        <div class="mockup-saldo">R$ 27.315,21</div>
+      </div>
+      <div class="mockup-tabs">
+        <div class="mockup-tab active">Visão Geral</div>
+        <div class="mockup-tab">Encontro</div>
+        <div class="mockup-tab">Categorias</div>
+        <div class="mockup-tab">Tabela</div>
+      </div>
+      <div class="mockup-body">
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-label">Total Anual</div>
+            <div class="kpi-val">R$ 107,7k</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Saldo a Liq.</div>
+            <div class="kpi-val red">R$ 27,3k</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Guilherme</div>
+            <div class="kpi-val" style="font-size:13px">R$ 52,1k</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">YTG Futuro</div>
+            <div class="kpi-val green" style="font-size:13px">R$ 22,8k</div>
+          </div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-title">Despesas Mensais por Pessoa</div>
+          <div class="bar-chart">
+            <div class="bar" style="height:30%"></div>
+            <div class="bar alt" style="height:28%"></div>
+            <div class="bar" style="height:45%"></div>
+            <div class="bar alt" style="height:42%"></div>
+            <div class="bar" style="height:100%"></div>
+            <div class="bar alt" style="height:60%"></div>
+            <div class="bar" style="height:58%"></div>
+            <div class="bar alt" style="height:55%"></div>
+            <div class="bar" style="height:52%"></div>
+            <div class="bar alt" style="height:50%"></div>
+            <div class="bar" style="height:50%"></div>
+            <div class="bar alt" style="height:50%"></div>
+          </div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-title">Por Categoria (Anual)</div>
+          <div class="cat-list">
+            <div class="cat-row">
+              <div class="cat-name">Reforma Casa</div>
+              <div class="cat-bar-wrap"><div class="cat-bar" style="width:56%;background:#4a9eff;"></div></div>
+              <div class="cat-pct">56%</div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">Despesa Fixa</div>
+              <div class="cat-bar-wrap"><div class="cat-bar" style="width:23%;background:#ff3d5a;"></div></div>
+              <div class="cat-pct">23%</div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">Mercado</div>
+              <div class="cat-bar-wrap"><div class="cat-bar" style="width:11%;background:#b97fff;"></div></div>
+              <div class="cat-pct">11%</div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">Delivery</div>
+              <div class="cat-bar-wrap"><div class="cat-bar" style="width:4%;background:#f5c842;"></div></div>
+              <div class="cat-pct">4%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="glow-ring"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- O QUE VOCÊ TEM ACESSO -->
+<section id="features">
+  <div class="section-tag">O que você vai receber</div>
+  <h2>Tudo que você precisa<br>para <span class="g">dominar</span> suas finanças</h2>
+  <p class="section-sub">Um sistema completo, pronto para usar. Sem planilha bagunçada. Sem complexidade.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-icon">📊</div>
+      <div>
+        <div class="feat-title">Visão Geral com Gráficos</div>
+        <div class="feat-desc">KPIs de total anual, saldo a liquidar e YTG futuro. Gráficos de despesas mensais por pessoa e por categoria — tudo em uma tela.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">⚖️</div>
+      <div>
+        <div class="feat-title">Encontro de Contas a Dois</div>
+        <div class="feat-desc">Ideal para casais ou sócios. Calcula automaticamente quem deve quanto para quem, mês a mês, com transferência líquida.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">🗂️</div>
+      <div>
+        <div class="feat-title">Categorias — Visão Anual</div>
+        <div class="feat-desc">Top 10 maiores despesas, percentuais por categoria, visão mensal e anual com um clique. Sabe exatamente onde o dinheiro vai.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📋</div>
+      <div>
+        <div class="feat-title">Tabela com Filtros Avançados</div>
+        <div class="feat-desc">Busque por descrição, pessoa, categoria, forma de pagamento, mês e status. 106+ lançamentos organizados e editáveis.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">✨</div>
+      <div>
+        <div class="feat-title">IA CFO — Análise Inteligente</div>
+        <div class="feat-desc">Clique em "Gerar Insights" e receba diagnóstico financeiro completo, alertas, otimizações e plano de ação — sem ser contador.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">📥</div>
+      <div>
+        <div class="feat-title">Import & Export Excel</div>
+        <div class="feat-desc">Exporte tudo para .xlsx, importe seus lançamentos em segundos. Seus dados, nas suas mãos — sem lock-in.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">💳</div>
+      <div>
+        <div class="feat-title">Lançamentos Parcelados</div>
+        <div class="feat-desc">Cadastre compras parceladas com valor total e o sistema divide automaticamente pelos meses. Cartão de crédito sem surpresas.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">🔒</div>
+      <div>
+        <div class="feat-title">Painel Oculto de Saldos</div>
+        <div class="feat-desc">Esconda os valores com um clique. Perfeito para usar em público ou em reuniões sem expor seus dados financeiros.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPARATIVO -->
+<section id="comparativo">
+  <div class="section-tag">Comparativo · Os dois caminhos</div>
+  <h2>Planilha <span class="g">×</span> Dashboard</h2>
+  <p class="section-sub">Você pode continuar na planilha bagunçada. Ou ter um sistema que pensa com você.</p>
+
+  <div class="compare-wrap">
+    <div class="compare-tabs">
+      <div class="ctab bad">❌ PLANILHA COMUM</div>
+      <div class="ctab good">✅ BG FINANCE</div>
+    </div>
+
+    <div class="compare-rows">
+      <div class="compare-row">
+        <div class="compare-label"><span>01</span> Visão por pessoa</div>
+        <div class="compare-cols">
+          <div class="ccol bad"><div class="ccol-icon">❌</div>Você calcula na mão quem gastou mais. Sempre errado.</div>
+          <div class="ccol good"><div class="ccol-icon">✅</div>Cada pessoa com seu total, gráfico e detalhe separado.</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label"><span>02</span> Encontro de contas</div>
+        <div class="compare-cols">
+          <div class="ccol bad"><div class="ccol-icon">❌</div>Discussão no fim do mês sobre quem deve para quem.</div>
+          <div class="ccol good"><div class="ccol-icon">✅</div>Transferência líquida calculada automaticamente.</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label"><span>03</span> Análise inteligente</div>
+        <div class="compare-cols">
+          <div class="ccol bad"><div class="ccol-icon">❌</div>Você mesmo analisa. Sem diagnóstico, sem alertas.</div>
+          <div class="ccol good"><div class="ccol-icon">✅</div>IA CFO gera insights, alertas e plano de ação.</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label"><span>04</span> Parcelamentos</div>
+        <div class="compare-cols">
+          <div class="ccol bad"><div class="ccol-icon">❌</div>Você divide o valor na mão e copia para cada mês.</div>
+          <div class="ccol good"><div class="ccol-icon">✅</div>Cadastra uma vez. O sistema distribui pelos meses.</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label"><span>05</span> Filtros e busca</div>
+        <div class="compare-cols">
+          <div class="ccol bad"><div class="ccol-icon">❌</div>Ctrl+F. Reza para achar o lançamento certo.</div>
+          <div class="ccol good"><div class="ccol-icon">✅</div>Filtros por pessoa, categoria, mês, forma e status.</div>
+        </div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label"><span>06</span> Tempo gasto</div>
+        <div class="compare-cols">
+          <div class="ccol bad"><div class="ccol-icon">❌</div>Horas por mês atualizando fórmulas e formatando.</div>
+          <div class="ccol good"><div class="ccol-icon">✅</div>Adiciona o lançamento. O resto é automático.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box">
+      <div class="result-tag">Resultado</div>
+      <div class="result-text">O BG Finance entrega <strong>mais clareza, menos trabalho</strong> e com a <strong>IA CFO do seu lado</strong>. Fuja da planilha e tenha um sistema que realmente funciona.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PARA QUEM É -->
+<section id="forwho">
+  <div class="section-tag">Para quem é esse dashboard?</div>
+  <h2>Para quem quer <span class="gr">clareza</span> financeira</h2>
+  <p class="section-sub">Não precisa ser contador. Não precisa saber programar.</p>
+
+  <div class="forwho-list">
+    <div class="forwho-item">
+      <div class="forwho-check">✓</div>
+      <div class="forwho-text"><strong>Casais</strong> que querem saber exatamente quem gastou mais e quanto cada um deve ao outro — sem briga no fim do mês.</div>
+    </div>
+    <div class="forwho-item">
+      <div class="forwho-check">✓</div>
+      <div class="forwho-text"><strong>Autônomos e freelancers</strong> que misturam conta pessoal e profissional e precisam separar tudo com clareza.</div>
+    </div>
+    <div class="forwho-item">
+      <div class="forwho-check">✓</div>
+      <div class="forwho-text"><strong>Pessoas que usam planilha</strong> e estão cansadas de perder tempo atualizando fórmulas toda semana.</div>
+    </div>
+    <div class="forwho-item">
+      <div class="forwho-check">✓</div>
+      <div class="forwho-text"><strong>Quem quer usar IA</strong> para ter um CFO pessoal que analisa seus gastos, gera alertas e sugere onde cortar.</div>
+    </div>
+    <div class="forwho-item">
+      <div class="forwho-check">✓</div>
+      <div class="forwho-text"><strong>Qualquer pessoa</strong> que quer parar de adivinhar onde o dinheiro foi e começar a decidir com dados reais.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section id="comprar">
+  <div class="section-tag">Preço · 1º Lote</div>
+  <h2>Oferta de <span class="g">lançamento</span></h2>
+  <p class="section-sub">Garanta agora enquanto está no preço de lançamento. Sem mensalidade, sem surpresa.</p>
+
+  <div class="pricing-box">
+    <div class="price-top-tag">O que está incluso</div>
+    <div class="price-items">
+      <div class="price-item">
+        <div class="price-check">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+        </div>
+        <div class="price-item-text">Dashboard completo com 5 módulos <s>R$197</s></div>
+      </div>
+      <div class="price-item">
+        <div class="price-check">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+        </div>
+        <div class="price-item-text">IA CFO — Análise inteligente sob demanda <s>R$97</s></div>
+      </div>
+      <div class="price-item">
+        <div class="price-check">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+        </div>
+        <div class="price-item-text">Encontro de Contas a Dois automático <s>R$47</s></div>
+      </div>
+      <div class="price-item">
+        <div class="price-check">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+        </div>
+        <div class="price-item-text">Import & Export Excel incluídos <s>R$27</s></div>
+      </div>
+      <div class="price-item">
+        <div class="price-check">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>
+        </div>
+        <div class="price-item-text"><strong>Acesso vitalício — sem mensalidade</strong></div>
+      </div>
+    </div>
+
+    <div class="divider-dots">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="discount-tag">🔥 Hoje com desconto especial de lançamento!</div>
+
+    <div class="price-main">
+      <div class="price-por">Por apenas:</div>
+      <div class="price-val">
+        <span class="cur">R$</span>47<span class="cents">,00</span>
+      </div>
+      <div class="price-note">Pagamento único · Acesso imediato · Sem mensalidade</div>
+    </div>
+
+    <a href="#" class="buy-btn">QUERO O MEU DASHBOARD →</a>
+
+    <div class="trust-badges">
+      <span>✓ Compra Segura</span>
+      <span>✓ Acesso Imediato</span>
+      <span>✓ Garantia 7 Dias</span>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-wrap">
+    <div class="countdown-label">⏳ Esta oferta termina em:</div>
+    <div class="countdown">
+      <div class="cd-block">
+        <span class="cd-num" id="cd-h">23</span>
+        <span class="cd-label">Horas</span>
+      </div>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-m">59</span>
+        <span class="cd-label">Minutos</span>
+      </div>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-s">59</span>
+        <span class="cd-label">Segundos</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FINAL CTA -->
+<section>
+  <div class="final-cta">
+    <div class="section-tag" style="justify-content:center;">2026 é o ano de</div>
+    <h2>Começar a <span class="gr">decidir</span><br>com dados reais</h2>
+    <p>Pare de adivinhar onde o dinheiro foi. Tenha um dashboard que pensa com você por menos do que um almoço.</p>
+    <a href="#comprar" class="buy-btn" style="max-width:360px;margin:0 auto 14px;">ACESSAR POR R$47 →</a>
+    <div class="trust-badges">
+      <span>✓ Acesso Imediato</span>
+      <span>✓ Sem Mensalidade</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="font-size:18px;font-weight:800;margin-bottom:8px;font-family:'Syne',sans-serif;">
+    <span style="color:var(--gold)">BG</span> FINANCE MANAGEMENT
+  </div>
+  <div>© 2026 · Dashboard Financeiro Pessoal · Todos os direitos reservados</div>
+</footer>
+
+<script>
+// Countdown — reseta todo dia à meia-noite
+function getEndTime() {
+  const stored = localStorage.getItem('bf_cd_end');
+  if (stored) {
+    const end = parseInt(stored);
+    if (end > Date.now()) return end;
+  }
+  const end = Date.now() + 24 * 60 * 60 * 1000;
+  try { localStorage.setItem('bf_cd_end', end); } catch(e){}
+  return end;
+}
+
+const endTime = getEndTime();
+
+function updateCountdown() {
+  const diff = Math.max(0, endTime - Date.now());
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Smooth active tab mockup (cosmetic)
+document.querySelectorAll('.mockup-tab').forEach((tab, i) => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.mockup-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
